@@ -1,0 +1,27 @@
+{
+  "name": "logo",
+  "version": "1.0.0",
+  "description": "An online Logo interpreter written in TypeScript and HTML5 Canvas",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "node dist/index.js",
+    "testbuild": "npm run build && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syswraith/logo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/syswraith/logo/issues"
+  },
+  "homepage": "https://github.com/syswraith/logo#readme",
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "typescript": "^5.9.3"
+  }
+}
