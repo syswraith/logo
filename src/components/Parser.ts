@@ -42,18 +42,42 @@ export class Parser {
     }
 
     const command_definition: command_type[] = [
+      // Movement
+      { command_name: "FORWARD", arguments_number: 1, arguments_type: ["number"] },
       { command_name: "FD", arguments_number: 1, arguments_type: ["number"] },
+      { command_name: "BACKWARD", arguments_number: 1, arguments_type: ["number"] },
       { command_name: "BK", arguments_number: 1, arguments_type: ["number"] },
+      { command_name: "RIGHT", arguments_number: 1, arguments_type: ["number"] },
       { command_name: "RT", arguments_number: 1, arguments_type: ["number"] },
+      { command_name: "LEFT", arguments_number: 1, arguments_type: ["number"] },
       { command_name: "LT", arguments_number: 1, arguments_type: ["number"] },
-      { command_name: "CMD", arguments_number: 1, arguments_type: ["number"] },
-      { command_name: "CMD", arguments_number: 2, arguments_type: ["number", "number"] },
-      { command_name: "PU", arguments_number: 0, arguments_type: [] },
-      { command_name: "PD", arguments_number: 0, arguments_type: [] },
-      { command_name: "CS", arguments_number: 0, arguments_type: [] },
-      { command_name: "HOME", arguments_number: 0, arguments_type: [] }
-    ];
 
+      // Pen control
+      { command_name: "PENUP", arguments_number: 0, arguments_type: [] },
+      { command_name: "PU", arguments_number: 0, arguments_type: [] },
+      { command_name: "PENDOWN", arguments_number: 0, arguments_type: [] },
+      { command_name: "PD", arguments_number: 0, arguments_type: [] },
+
+      // Screen control
+      { command_name: "CLEARSCREEN", arguments_number: 0, arguments_type: [] },
+      { command_name: "CS", arguments_number: 0, arguments_type: [] },
+      { command_name: "HOME", arguments_number: 0, arguments_type: [] },
+
+      // Value/print
+      { command_name: "PRINT", arguments_number: 1, arguments_type: ["number"] },
+      { command_name: "PR", arguments_number: 1, arguments_type: ["number"] },
+
+      // Position
+      { command_name: "SETXY", arguments_number: 2, arguments_type: ["number", "number"] },
+      { command_name: "SETPOS", arguments_number: 2, arguments_type: ["number", "number"] },
+
+      // Heading & visibility
+      { command_name: "SETHEADING", arguments_number: 1, arguments_type: ["number"] },
+      { command_name: "SHOWTURTLE", arguments_number: 0, arguments_type: [] },
+      { command_name: "ST", arguments_number: 0, arguments_type: [] },
+      { command_name: "HIDETURTLE", arguments_number: 0, arguments_type: [] },
+      { command_name: "HT", arguments_number: 0, arguments_type: [] }
+    ];
     this.nested_tokens.forEach(
       (token)=>{
         let matched = false;
@@ -72,7 +96,7 @@ export class Parser {
 
       }
     );
-    
+
 
   }
 

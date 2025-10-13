@@ -28,7 +28,7 @@ export class Tokenizer
     this.string_tokens.forEach(
       (token)=>{
         let n = Number(token);
-        if (isNaN(n)) { this.typecasted_tokens.push(token); }
+        if (isNaN(n)) { this.typecasted_tokens.push(token.toUpperCase()); }
         else { this.typecasted_tokens.push(n); }
       }
     );
