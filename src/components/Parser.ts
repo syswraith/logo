@@ -5,32 +5,59 @@ export class Parser {
   constructor(tokens: (string | number)[]) {
     this.tokens = tokens;
     this.AST_constructor();
+    console.log(this.nested_tokens)
     this.AST_evaluator();
     this.evaluated_tokens = this.nested_tokens;
   }
 
+  // Constructs the AST
+  // Normal commands are parsed and pushed as string or number
+  // when a repeat token appears then it calls another function to handle it
+  // repeat has a different nested array to handle things, but the logic is the same
   AST_constructor(): void {
-    let temp_1: [string, number[]] | null = null;
+    let temp_1: [string, any[]] | null = null;
 
-    this.tokens.forEach((token) => {
+    const parseRepeatBlock = (tokens: (string | number)[]): [string, any[]] => {
+      let repeatBlock: [string, any[]] = ['repeat', []];
+      let subTemp: [string, number[]] | null = null;
+      tokens.forEach(t => {
+        if (typeof t === 'string') {
+          if (subTemp) repeatBlock[1].push(subTemp);
+          subTemp = [t, []];
+        } else if (typeof t === 'number') {
+          if (!subTemp) throw new Error(`Number ${t} found before any command inside REPEAT`);
+          subTemp[1].push(t);
+        }
+      });
+      if (subTemp) repeatBlock[1].push(subTemp);
+      return repeatBlock;
+    };
+
+    for (let i = 0; i < this.tokens.length; i++) {
+      let token = this.tokens[i];
 
       if (typeof token === "string") {
+        if (temp_1) { this.nested_tokens.push(temp_1); temp_1 = null; }
 
-        if (temp_1) this.nested_tokens.push(temp_1);
-        temp_1 = [token, []];
+        if (token.toUpperCase() === "REPEAT") {
+          let start = this.tokens.indexOf("[", i);
+          let end = this.tokens.indexOf("]", start);
+          if (start === -1 || end === -1) throw new Error("Missing brackets for REPEAT");
+          let inside = this.tokens.slice(start + 1, end);
+          this.nested_tokens.push(parseRepeatBlock(inside));
+          i = end;
+        } else {
+          temp_1 = [token, []];
+        }
 
       } else if (typeof token === "number") {
-
         if (!temp_1) throw new Error(`Number ${token} found before any command`);
         temp_1[1].push(token);
-
       }
-
-    });
+    }
 
     if (temp_1) this.nested_tokens.push(temp_1);
   }
-
   AST_evaluator():void {
 
     type arg_type = "number";
