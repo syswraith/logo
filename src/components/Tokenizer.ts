@@ -1,15 +1,18 @@
-export class Tokenizer
-{
+export class Tokenizer {
   buffer: string;
   lines: string[] = [];
   string_tokens: string[] = [];
   typecasted_tokens: (string | number)[] = [];
   tokens: (string | number)[] = [];
 
+  // declare a buffer that will hold a whole string regardless of spaces or newlines
+  // first split by \n and filter out the empty elements
+  // then tokenize them into strings by splitting with spaces
+  // then take those strings and typecast them into their right types
   constructor(buffer: string) {
     this.buffer = buffer;
     let temp_arr = this.buffer.split('\n');
-    this.lines = temp_arr.filter((element)=>{ return element !== '' });
+    this.lines = temp_arr.filter((element) => { return element !== '' });
 
     this.string_tokenize();
     this.typecast_tokenize();
@@ -18,15 +21,15 @@ export class Tokenizer
 
   string_tokenize(): void {
     this.lines.forEach(
-      (line)=>{
-        line.split(' ').forEach((token)=>this.string_tokens.push(token));
+      (line) => {
+        line.split(' ').forEach((token) => this.string_tokens.push(token));
       }
     )
   }
 
   typecast_tokenize(): void {
     this.string_tokens.forEach(
-      (token)=>{
+      (token) => {
         let n = Number(token);
         if (isNaN(n)) { this.typecasted_tokens.push(token.toUpperCase()); }
         else { this.typecasted_tokens.push(n); }
