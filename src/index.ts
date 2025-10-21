@@ -1,1 +1,2 @@
-import { Parser, Tokenizer } from './components';
+export { Parser, Tokenizer } from './components';
+
