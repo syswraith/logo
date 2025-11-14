@@ -17,9 +17,69 @@
         <button id="run">Run</button>
       </div>
     </div>
+    <script src="./LogoCore.js"></script>
     <script>
+    const { Tokenizer, Parser } = LogoCore;
     const canvas = document.getElementById("canvas");
     const exportBtn = document.getElementById("export");
+    const editor = document.getElementById("editor");
+    const runBtn = document.getElementById("run");
+
+    const ctx = canvas.getContext("2d");
+    const turtle = {x:450, y:450, angle:0};
+
+
+    function toRadians(angle) {
+      return (angle * Math.PI) / 180;
+    }
+
+    function computeVector(angle, distance) {
+      const r = (angle - 90) * Math.PI / 180;
+      return {
+        dx: distance * Math.cos(r),
+        dy: distance * Math.sin(r)
+      };
+    }
+
+    function moveTurtle(turtle, dx, dy) {
+      turtle.x += dx;
+      turtle.y += dy;
+    }
+
+    function drawLine(x1, y1, x2, y2){
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    function forward(turtle, distance) {
+      const startX = turtle.x;
+      const startY = turtle.y;
+      const v = computeVector(turtle.angle, distance);
+      moveTurtle(turtle, v.dx, v.dy);
+      drawLine(startX, startY, turtle.x, turtle.y);
+    }
+
+    const draw = (tree) => {
+      tree.forEach(node=>{
+        switch (node[0]) {
+          case 'FD':
+            forward(turtle, node[1][0]); 
+            break;
+          case 'BK':
+            forward(turtle, -node[1][0]);
+            break;
+          case 'LT':
+            turtle.angle -= node[1][0];
+            break;
+          case 'RT':
+            turtle.angle += node[1][0];
+            break;
+        }
+      });
+
+    };
 
     exportBtn.addEventListener("click", () => {
       const img = canvas.toDataURL("image/png");
@@ -28,6 +88,16 @@
       downloadLink.download = "canvas.png";
       downloadLink.click();
     });
+
+    runBtn.addEventListener("click", ()=>{
+      let editor_content = editor.value;
+      editor.value = '';
+      const t = new Tokenizer(editor_content);
+      const p = new Parser(t.tokens);
+      console.log(p.getAST());
+      draw(p.getAST());
+    })
+
     </script>
   </body>
 </html>
