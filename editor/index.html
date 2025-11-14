@@ -26,8 +26,7 @@
     const runBtn = document.getElementById("run");
 
     const ctx = canvas.getContext("2d");
-    const turtle = {x:450, y:450, angle:0};
-
+    const turtle = {x:450, y:450, angle:0, pen:true};
 
     function toRadians(angle) {
       return (angle * Math.PI) / 180;
@@ -46,7 +45,8 @@
       turtle.y += dy;
     }
 
-    function drawLine(x1, y1, x2, y2){
+    function drawLine(x1, y1, x2, y2) {
+      if(!turtle.pen) return;
       ctx.beginPath();
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
@@ -61,21 +61,49 @@
       drawLine(startX, startY, turtle.x, turtle.y);
     }
 
+    function penup(turtle) {turtle.pen=false;}
+
+    function pendown(turtle) {turtle.pen=true;}
+
+    function clearscreen(ctx, canvas) { ctx.clearRect(0,0,canvas.width,canvas.height); }
+
+    function home(turtle,canvas){turtle.x=canvas.width/2;turtle.y=canvas.height/2;turtle.angle=0;}
+
     const draw = (tree) => {
       tree.forEach(node=>{
         switch (node[0]) {
           case 'FD':
+          case 'FORWARD':
             forward(turtle, node[1][0]); 
             break;
           case 'BK':
+          case 'BACKWARD':
             forward(turtle, -node[1][0]);
             break;
           case 'LT':
+          case 'LEFTTURN':
             turtle.angle -= node[1][0];
             break;
           case 'RT':
+          case 'RIGHTTURN':
             turtle.angle += node[1][0];
             break;
+          case 'PU':
+          case 'PENUP':
+            penup(turtle);
+            break;
+          case 'PD':
+          case 'PENDOWN':
+            pendown(turtle);
+            break;
+          case 'CS':
+          case 'CLEARSCREEN':
+            clearscreen(ctx, canvas);
+            break;
+          case 'HOME':
+            home(turtle, canvas);
+            break;
+        
         }
       });
 

@@ -6,14 +6,15 @@ export class Parser {
     this.tokens = tokens;
     this.AST_constructor();
     this.AST_evaluator();
-    //    console.dir(this.nested_tokens, { depth: null });
   }
 
   // Constructs the AST
   // Normal commands are parsed and pushed as string or number
   // when a repeat token appears then it calls another function to handle it
   // repeat has a different nested array to handle things, but the logic is the same
-
+  getAST() {
+    return this.nested_tokens;
+  }
 
   AST_constructor(): void {
     let temp_1: [string, any[]] | null = null;

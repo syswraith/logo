@@ -1,18 +1,19 @@
 # logo
+
 An online Logo interpreter written in TypeScript and HTML5 Canvas
 
 ## Reference
 
 | Command | Syntax | Function | Implementation Status |
 |----------|---------|-----------|------------------------|
-| `FORWARD` | `FORWARD n` or `FD n` | Moves the turtle forward by *n* steps. | No |
-| `BACKWARD` | `BACKWARD n` or `BK n` | Moves the turtle backward by *n* steps. | No |
-| `RIGHT` | `RIGHT angle` or `RT angle` | Turns the turtle clockwise by *angle* degrees. | No |
-| `LEFT` | `LEFT angle` or `LT angle` | Turns the turtle counterclockwise by *angle* degrees. | No |
-| `PENUP` | `PENUP` or `PU` | Lifts the pen to stop drawing. | No |
-| `PENDOWN` | `PENDOWN` or `PD` | Lowers the pen to start drawing. | No |
-| `CLEARSCREEN` | `CLEARSCREEN` or `CS` | Clears the screen and resets the turtle. | No |
-| `HOME` | `HOME` | Returns the turtle to the center of the screen. | No |
+| `FORWARD` | `FORWARD n` or `FD n` | Moves the turtle forward by *n* steps. | Yes |
+| `BACKWARD` | `BACKWARD n` or `BK n` | Moves the turtle backward by *n* steps. | Yes |
+| `RIGHT` | `RIGHT angle` or `RT angle` | Turns the turtle clockwise by *angle* degrees. | Yes |
+| `LEFT` | `LEFT angle` or `LT angle` | Turns the turtle counterclockwise by *angle* degrees. | Yes |
+| `PENUP` | `PENUP` or `PU` | Lifts the pen to stop drawing. | Yes |
+| `PENDOWN` | `PENDOWN` or `PD` | Lowers the pen to start drawing. | Yes |
+| `CLEARSCREEN` | `CLEARSCREEN` or `CS` | Clears the screen and resets the turtle. | Yes |
+| `HOME` | `HOME` | Returns the turtle to the center of the screen. | Yes |
 | `REPEAT` | `REPEAT n [commands]` | Repeats a block of commands *n* times. | No |
 | `TO` | `TO procname :args ... END` | Defines a procedure. | No |
 | `PRINT` | `PRINT value` or `PR value` | Displays a value or result. | No |
@@ -25,4 +26,3 @@ An online Logo interpreter written in TypeScript and HTML5 Canvas
 | `SHOWTURTLE` | `SHOWTURTLE` or `ST` | Makes the turtle visible. | No |
 | `HIDETURTLE` | `HIDETURTLE` or `HT` | Hides the turtle from view. | No |
 | `STOP` | `STOP` | Stops execution of current procedure. | No |
-
