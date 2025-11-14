@@ -2,23 +2,30 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main] # or whichever branch you want
+    branches: [main] # Change this if your default branch differs
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false # Security best-practice
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Copy Editor to Public Folder
+      - name: Prepare deployment content
         run: |
-          rm -rf public || true
-          cp -r editor public
-      - name: Upload Pages Artifact
+          mkdir deploy
+          cp -r editor/* deploy/
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: deploy
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
+        id: deployment
