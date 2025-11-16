@@ -17,16 +17,23 @@ export class Parser {
   }
 
   AST_constructor(): void {
-    // this holds the tokens
     let temp_1: [string, any[]] | null = null;
 
-    // handles nested repeated blocks recursively
+    // dont read this first read the one after this
+    // welcome back :) now parseRepeatBlock takes in tokens and returns an array of [token, [args...]]
+    // init i to 0
+    // the 0th index is the repeat cmd itself, the 1st index is the count
+    // check the 3rd for '['
+    // declare a block that holds the count initially
+    // declare another block that holds the current commands and their arguments
+    // when we're done, we will push the current commands block to the block
+    // while i < tokens do stuff
+    // check for ']' then do the ALMIGHTY PUSH
+    // if token == string and token == repeat then recursively call the same function BUT slice the tokens
     const parseRepeatBlock = (tokens: (string | number)[]): [string, any[], number] => {
       let i = 0;
-      // keeps track of token counts
-      const count = tokens[i++] as number;
-      // yell if no [
-      if (tokens[i++] !== "[") throw new Error('Expected "[" after REPEAT count');
+      const count = tokens[i++];
+      if (tokens[i++] !== '[') throw new Error('Expected "[" after REPEAT count');
 
       const block: any[] = [count];
       let currentCmd: [string, any[]] | null = null;
@@ -34,23 +41,22 @@ export class Parser {
       while (i < tokens.length) {
         const token = tokens[i];
 
-        if (token === "]") {
-          // parse commands and add them to the block declared above
+        if (token === ']') {
           if (currentCmd) block.push(currentCmd);
-          return ["REPEAT", block, i + 1];
+          return ['REPEAT', block, i + 1];
         }
 
-        if (typeof token === "string") {
-          if (token.toUpperCase() === "REPEAT") {
-            const [nestedCmdName, nestedArgs, consumed] = parseRepeatBlock(tokens.slice(i + 1));
-            block.push([nestedCmdName, nestedArgs]);
+        if (typeof token === 'string') {
+          if (token === 'REPEAT') {
+            const [nested, nestedArgs, consumed] = parseRepeatBlock(tokens.slice(i + 1));
+            block.push([nested, nestedArgs]);
             i += consumed + 1;
             currentCmd = null;
             continue;
           }
           if (currentCmd) block.push(currentCmd);
           currentCmd = [token, []];
-        } else if (typeof token === "number") {
+        } else if (typeof token === 'number') {
           if (!currentCmd) throw new Error(`Number ${token} found before any command`);
           currentCmd[1].push(token);
         }
@@ -61,21 +67,29 @@ export class Parser {
       throw new Error('Missing closing "]" for REPEAT block');
     };
 
+    // loop over the tokens
+    // if string then check for no-repeat and repeat
+    //    if temp_1 exists then push temp_1 to nested_tokens and set it equal to null for next use
+    //    if token equals repeat then call the parseRepeatBlock which will return the command, the arguments and the number of tokens consumed
+    //      push the commands and arguments to the nested_tokens and add the consumed tokens to i so it resumes the loop after that many number of tokens
+    //    else set temp_1 = [token, [arg1, arg2, ...]]
+    // if number then push to arguments
+    // now go read that block above
     for (let i = 0; i < this.tokens.length; i++) {
       const token = this.tokens[i];
 
-      if (typeof token === "string") {
+      if (typeof token === 'string') {
         if (temp_1) { this.nested_tokens.push(temp_1); temp_1 = null; }
 
-        if (token.toUpperCase() === "REPEAT") {
-          const [cmdName, args, consumed] = parseRepeatBlock(this.tokens.slice(i + 1));
-          this.nested_tokens.push([cmdName, args]);
+        if (token.toUpperCase() === 'REPEAT') {
+          const [blockCmd, blockArgs, consumed] = parseRepeatBlock(this.tokens.slice(i + 1));
+          this.nested_tokens.push([blockCmd, blockArgs]);
           i += consumed;
         } else {
           temp_1 = [token, []];
         }
 
-      } else if (typeof token === "number") {
+      } else if (typeof token === 'number') {
         if (!temp_1) throw new Error(`Number ${token} found before any command`);
         temp_1[1].push(token);
       }
@@ -83,8 +97,6 @@ export class Parser {
 
     if (temp_1) this.nested_tokens.push(temp_1);
   }
-
-
 
   AST_evaluator(): void {
     type arg_type = "number";

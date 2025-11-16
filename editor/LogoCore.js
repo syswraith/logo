@@ -55,9 +55,9 @@ var LogoCore = (() => {
             return ["REPEAT", block, i + 1];
           }
           if (typeof token === "string") {
-            if (token === "REPEAT") {
-              const [nested, nestedArgs, consumed] = parseRepeatBlock(tokens.slice(i + 1));
-              block.push([nested, nestedArgs]);
+            if (token.toUpperCase() === "REPEAT") {
+              const [nestedCmdName, nestedArgs, consumed] = parseRepeatBlock(tokens.slice(i + 1));
+              block.push([nestedCmdName, nestedArgs]);
               i += consumed + 1;
               currentCmd = null;
               continue;
@@ -80,8 +80,8 @@ var LogoCore = (() => {
             temp_1 = null;
           }
           if (token.toUpperCase() === "REPEAT") {
-            const [blockCmd, blockArgs, consumed] = parseRepeatBlock(this.tokens.slice(i + 1));
-            this.nested_tokens.push([blockCmd, blockArgs]);
+            const [cmdName, args, consumed] = parseRepeatBlock(this.tokens.slice(i + 1));
+            this.nested_tokens.push([cmdName, args]);
             i += consumed;
           } else {
             temp_1 = [token, []];
