@@ -24,7 +24,7 @@
         <button id="export">Export</button>
       </div>
       <div class="right">
-        <textarea id="editor" placeholder='repeat syntax needs to be spaced out like `repeat 2 [ fd 10 repeat 2 [ fd 10 ] `'></textarea>
+        <textarea id="editor" placeholder='repeat syntax needs to be spaced out like `repeat 2 [ fd 10 repeat 2 [ fd 10 ]`'></textarea>
         <button id="run">Run</button>
       </div>
     </div>
@@ -114,14 +114,13 @@
           case 'HOME':
             home(turtle, canvas);
             break;
-
-
           case 'REPEAT': {
             const [count, ...body] = node[1]
             for (let i = 0; i < count; i++) draw(body)
             break
           }
         }
+
       });
 
     };
