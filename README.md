@@ -14,7 +14,7 @@ An online Logo interpreter written in TypeScript and HTML5 Canvas
 | `PENDOWN` | `PENDOWN` or `PD` | Lowers the pen to start drawing. | Yes |
 | `CLEARSCREEN` | `CLEARSCREEN` or `CS` | Clears the screen and resets the turtle. | Yes |
 | `HOME` | `HOME` | Returns the turtle to the center of the screen. | Yes |
-| `REPEAT` | `REPEAT n [commands]` | Repeats a block of commands *n* times. | No |
+| `REPEAT` | `REPEAT n [commands]` | Repeats a block of commands *n* times. | Yes |
 | `TO` | `TO procname :args ... END` | Defines a procedure. | No |
 | `PRINT` | `PRINT value` or `PR value` | Displays a value or result. | No |
 | `MAKE` | `MAKE "var value` | Creates or sets a variable. | No |
