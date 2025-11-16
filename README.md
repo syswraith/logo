@@ -15,16 +15,10 @@ An online Logo interpreter written in TypeScript and HTML5 Canvas
 | `CLEARSCREEN` | `CLEARSCREEN` or `CS` | Clears the screen and resets the turtle. | Yes |
 | `HOME` | `HOME` | Returns the turtle to the center of the screen. | Yes |
 | `REPEAT` | `REPEAT n [commands]` | Repeats a block of commands *n* times. | Yes |
-| `TO` | `TO procname :args ... END` | Defines a procedure. | No |
 | `PRINT` | `PRINT value` or `PR value` | Displays a value or result. | No |
-| `MAKE` | `MAKE "var value` | Creates or sets a variable. | No |
-| `IF` | `IF condition [commands]` | Executes commands if condition is true. | No |
-| `IFELSE` | `IFELSE condition [true] [false]` | Executes one of two command blocks. | No |
 | `SETXY` | `SETXY x y` | Moves the turtle to coordinates *(x, y)*. | No |
 | `SETPOS` | `SETPOS [x y]` | Moves turtle using a list of coordinates. | No |
 | `SETHEADING` | `SETHEADING angle` | Sets turtle’s facing direction. | No |
-| `SHOWTURTLE` | `SHOWTURTLE` or `ST` | Makes the turtle visible. | No |
-| `HIDETURTLE` | `HIDETURTLE` or `HT` | Hides the turtle from view. | No |
 | `STOP` | `STOP` | Stops execution of current procedure. | No |
 
 ## Setup Instructions
