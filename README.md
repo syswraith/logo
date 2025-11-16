@@ -26,3 +26,21 @@ An online Logo interpreter written in TypeScript and HTML5 Canvas
 | `SHOWTURTLE` | `SHOWTURTLE` or `ST` | Makes the turtle visible. | No |
 | `HIDETURTLE` | `HIDETURTLE` or `HT` | Hides the turtle from view. | No |
 | `STOP` | `STOP` | Stops execution of current procedure. | No |
+
+## Setup Instructions
+
+1. Git clone the repo
+2. Run the following command to install dependencies
+
+```bash
+npm install
+```
+
+3. Generate the `LogoCore.js` with
+
+```bash
+npm run export
+```
+
+4. Copy `dist/LogoCore.js` to `editor/` (this will replace the existing one present there)
+5. Open `editor/index.html` in browser
