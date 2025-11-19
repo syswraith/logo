@@ -37,7 +37,7 @@
     const runBtn = document.getElementById("run");
 
     const ctx = canvas.getContext("2d");
-    const turtle = {x:450, y:450, angle:0, pen:true};
+    const turtle = { x:450, y:450, angle:0, pen:true };
 
     function toRadians(angle) {
       return (angle * Math.PI) / 180;
@@ -78,7 +78,12 @@
 
     function clearscreen(ctx, canvas) { ctx.clearRect(0,0,canvas.width,canvas.height); }
 
-    function home(turtle,canvas){turtle.x=canvas.width/2;turtle.y=canvas.height/2;turtle.angle=0;}
+    function home(turtle,canvas) { turtle.x=canvas.width/2; turtle.y=canvas.height/2; turtle.angle=0; }
+
+    function setxy(xcoor, ycoor) {
+      turtle.x = xcoor;
+      turtle.y = ycoor;
+    }
 
     const draw = (tree) => {
       tree.forEach(node=>{
@@ -115,14 +120,17 @@
             home(turtle, canvas);
             break;
           case 'REPEAT': {
-            const [count, ...body] = node[1]
-            for (let i = 0; i < count; i++) draw(body)
-            break
+            const [count, ...body] = node[1];
+            for (let i = 0; i < count; i++) draw(body);
+            break;
+          }
+          case 'SETXY': {
+            const [x, y] = node[1];
+            setxy(x, y);
+            break;
           }
         }
-
       });
-
     };
 
     exportBtn.addEventListener("click", () => {
