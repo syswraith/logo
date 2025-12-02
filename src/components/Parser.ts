@@ -129,7 +129,7 @@ export class Parser {
       { command_name: "PRINT", arguments_number: 1, arguments_type: ["number"] },
       { command_name: "PR", arguments_number: 1, arguments_type: ["number"] },
       { command_name: "SETXY", arguments_number: 2, arguments_type: ["number", "number"] },
-      { command_name: "SETPOS", arguments_number: 2, arguments_type: ["number", "number"] },
+      { command_name: "SETPOS", arguments_number: Infinity, arguments_type: ["number", "number"] },
       { command_name: "SETHEADING", arguments_number: 1, arguments_type: ["number"] },
       { command_name: "SHOWTURTLE", arguments_number: 0, arguments_type: [] },
       { command_name: "ST", arguments_number: 0, arguments_type: [] },
@@ -146,11 +146,11 @@ export class Parser {
         for (let i = 0; i < count; i++) body.forEach(cmd => evaluateNode(cmd));
         return;
       }
-
       const matched = command_definition.some(cmd =>
-        cmd.command_name === name && cmd.arguments_number === node[1].length
+        cmd.command_name === name &&
+        (cmd.arguments_number === Infinity ||
+          cmd.arguments_number === node[1].length)
       );
-
       if (!matched)
         throw new Error(`Invalid number of arguments (${node[1].length}) for "${node[0]}"`);
     };

@@ -15,9 +15,7 @@ An online Logo interpreter written in TypeScript and HTML5 Canvas
 | `CLEARSCREEN` | `CLEARSCREEN` or `CS` | Clears the screen and resets the turtle. | Yes |
 | `HOME` | `HOME` | Returns the turtle to the center of the screen. | Yes |
 | `REPEAT` | `REPEAT n [commands]` | Repeats a block of commands *n* times. | Yes |
-| `PRINT` | `PRINT value` or `PR value` | Displays a value or result. | No |
-| `SETXY` | `SETXY x y` | Moves the turtle to coordinates *(x, y)*. | No |
-| `SETPOS` | `SETPOS [x y]` | Moves turtle using a list of coordinates. | No |
+| `SETXY` | `SETXY x y` | Moves the turtle to coordinates *(x, y)*. | Yes |
 | `SETHEADING` | `SETHEADING angle` | Sets turtle’s facing direction. | No |
 | `STOP` | `STOP` | Stops execution of current procedure. | No |
 
